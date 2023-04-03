@@ -1,12 +1,24 @@
 package io.github.erichika.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "pedido")
 public class Pedido {
+
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+    @Column(name = "data_pedido")
     private LocalDate dataPedido;
+    @Column(length = 20, precision = 2)
     private BigDecimal total;
 
     public Integer getId() {
