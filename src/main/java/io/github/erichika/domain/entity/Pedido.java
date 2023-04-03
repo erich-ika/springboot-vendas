@@ -19,7 +19,7 @@ public class Pedido {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -27,9 +27,18 @@ public class Pedido {
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
 
-    @Column(length = 20, precision = 2)
+    @Column(precision = 20, scale = 2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens;
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", dataPedido=" + dataPedido +
+                ", total=" + total +
+                '}';
+    }
 }
