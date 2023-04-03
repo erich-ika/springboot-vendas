@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,11 +19,17 @@ public class Pedido {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
+
     @Column(length = 20, precision = 2)
     private BigDecimal total;
+
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itens;
 }
