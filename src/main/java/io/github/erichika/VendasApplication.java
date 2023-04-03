@@ -23,6 +23,9 @@ public class VendasApplication {
             boolean existe = clientes.existsByNome("Fulano");
             System.out.println("Existe nome Fulano? " + existe);
 
+            System.out.println("Buscando clientes");
+            clientes.findByNomeLike("Cli").forEach(System.out::println);
+
 /*
             List<Cliente> todosClientes = clientes.findAll();
             todosClientes.forEach(System.out::println);
