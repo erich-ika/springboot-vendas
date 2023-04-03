@@ -1,5 +1,6 @@
 package io.github.erichika.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,21 +16,13 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column
     private int id;
-    @Column(name = "nome", length = 100)
+    @Column(length = 100)
     private String nome;
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
-
-    public Cliente(String nome) {
-        this.nome = nome;
-    }
-
-    public Cliente(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
 
     @Override
     public String toString() {

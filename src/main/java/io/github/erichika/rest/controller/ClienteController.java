@@ -4,10 +4,7 @@ import io.github.erichika.domain.entity.Cliente;
 import io.github.erichika.domain.repository.Clientes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -15,7 +12,7 @@ import java.util.Optional;
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
-    private Clientes clientes;
+    private final Clientes clientes;
 
     public ClienteController(Clientes clientes) {
         this.clientes = clientes;
@@ -30,5 +27,12 @@ public class ClienteController {
             return ResponseEntity.ok(cliente.get());
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping(value = "/")
+    @ResponseBody
+    public ResponseEntity save(@RequestBody Cliente cliente) {
+        Cliente clienteSalvo = clientes.save(cliente);
+        return ResponseEntity.ok(clienteSalvo);
     }
 }
