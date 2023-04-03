@@ -2,6 +2,7 @@ package io.github.erichika.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class Cliente {
 
     @Id
@@ -19,9 +21,6 @@ public class Cliente {
     private String nome;
     @OneToMany(mappedBy = "cliente")
     private Set<Pedido> pedidos;
-
-    public Cliente() {
-    }
 
     public Cliente(String nome) {
         this.nome = nome;

@@ -6,10 +6,10 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "produto")
 @Getter
 @Setter
+@Entity
+@Table(name = "produto")
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
