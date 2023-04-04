@@ -12,15 +12,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/api/clientes")
 public class ClienteController {
 
-    private Clientes clientes;
+    private final Clientes clientes;
 
     public ClienteController(Clientes clientes) {
         this.clientes = clientes;
     }
 
-    @GetMapping("/api/clientes/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity getClienteById(@PathVariable Integer id) {
         Optional<Cliente> cliente = clientes.findById(id);
@@ -32,14 +33,14 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/api/clientes")
+    @PostMapping
     @ResponseBody
     public ResponseEntity save(@RequestBody Cliente cliente) {
         Cliente clienteSalvo = clientes.save(cliente);
         return ResponseEntity.ok(clienteSalvo);
     }
 
-    @DeleteMapping("/api/clientes/{id}")
+    @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity delete(@PathVariable Integer id) {
         Optional<Cliente> cliente = clientes.findById(id);
@@ -52,7 +53,7 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/api/clientes/{id}")
+    @PutMapping("/{id}")
     @ResponseBody
     public ResponseEntity update(@PathVariable Integer id,
                                  @RequestBody Cliente cliente) {
@@ -65,13 +66,12 @@ public class ClienteController {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/api/clientes")
+    @GetMapping
     public ResponseEntity find(Cliente filtro) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
-                .withStringMatcher(
-                        ExampleMatcher.StringMatcher.CONTAINING);
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 
         Example<Cliente> example = Example.of(filtro, matcher);
         List<Cliente> lista = clientes.findAll(example);

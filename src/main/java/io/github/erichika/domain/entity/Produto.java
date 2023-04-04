@@ -14,7 +14,7 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Column
     private String descricao;
     @Column(name = "preco_unitario")

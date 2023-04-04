@@ -17,7 +17,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private int id;
+    private Integer id;
     @Column(length = 100)
     private String nome;
     @Column(length = 11)
@@ -31,6 +31,7 @@ public class Cliente {
         return "Cliente{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
                 '}';
     }
 }
