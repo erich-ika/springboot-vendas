@@ -43,7 +43,6 @@ public class ClienteController {
                     return cliente;
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
     }
 
     @PutMapping("/{id}")
