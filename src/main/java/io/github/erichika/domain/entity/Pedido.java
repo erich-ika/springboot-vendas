@@ -1,16 +1,18 @@
 package io.github.erichika.domain.entity;
 
+import io.github.erichika.domain.entity.enums.StatusPedido;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "pedido")
 public class Pedido {
@@ -30,15 +32,10 @@ public class Pedido {
     @Column(precision = 20, scale = 2)
     private BigDecimal total;
 
+    @Enumerated(EnumType.STRING)
+    @Column
+    private StatusPedido status;
+
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens;
-
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", dataPedido=" + dataPedido +
-                ", total=" + total +
-                '}';
-    }
 }

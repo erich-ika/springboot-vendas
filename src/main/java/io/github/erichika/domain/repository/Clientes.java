@@ -12,7 +12,7 @@ import java.util.List;
 public interface Clientes extends JpaRepository<Cliente, Integer> {
 
     @Query(value = "select c from Cliente c where c.nome like %:nome%")
-    List<Cliente> findByNomeLike( @Param("nome") String nome);
+    List<Cliente> findByNomeLike(@Param("nome") String nome);
 
     @Query("delete from Cliente  c where c.nome = :nome")
     @Modifying
