@@ -8,19 +8,17 @@ import io.github.erichika.domain.repository.Clientes;
 import io.github.erichika.domain.repository.ItensPedido;
 import io.github.erichika.domain.repository.Pedidos;
 import io.github.erichika.domain.repository.Produtos;
+import io.github.erichika.exception.RegraNegocioException;
 import io.github.erichika.rest.dto.ItemPedidoDTO;
 import io.github.erichika.rest.dto.PedidoDTO;
 import io.github.erichika.service.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RequiredArgsConstructor
 @Service
@@ -36,10 +34,7 @@ public class PedidoServiceImpl implements PedidoService {
     public Pedido salvar(PedidoDTO dto) {
         Integer idcliente = dto.getCliente();
         Cliente cliente = clientesRepository.findById(idcliente)
-                .orElseThrow(() -> new ResponseStatusException(
-                        BAD_REQUEST,
-                        "Código de cliente inválido."
-                ));
+                .orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
 
         Pedido pedido = new Pedido();
         pedido.setTotal(dto.getTotal());
@@ -56,7 +51,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     private List<ItemPedido> converterItens(Pedido pedido, List<ItemPedidoDTO> itens) {
         if (itens.isEmpty()) {
-            throw new ResponseStatusException(BAD_REQUEST, "Não é possível realizar um pedido sem itens.");
+            throw new RegraNegocioException("Não é possível realizar um pedido sem itens.");
         }
 
         return itens
@@ -65,10 +60,7 @@ public class PedidoServiceImpl implements PedidoService {
                     Integer idProduto = dto.getProduto();
                     Produto produto = produtosRepository
                             .findById(idProduto)
-                            .orElseThrow(() -> new ResponseStatusException(
-                                    BAD_REQUEST,
-                                    "Código de produto inválido:" + idProduto
-                            ));
+                            .orElseThrow(() -> new RegraNegocioException("Código de produto inválido."));
 
                     ItemPedido itemPedido = new ItemPedido();
                     itemPedido.setQuantidade(dto.getQuantidade());
