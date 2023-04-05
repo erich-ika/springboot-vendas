@@ -1,5 +1,6 @@
 package io.github.erichika.domain.entity;
 
+import io.github.erichika.domain.entity.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,10 @@ public class Pedido {
 
     @Column(precision = 20, scale = 2)
     private BigDecimal total;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private StatusPedido status;
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens;

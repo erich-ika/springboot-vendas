@@ -4,6 +4,7 @@ import io.github.erichika.domain.entity.Cliente;
 import io.github.erichika.domain.entity.ItemPedido;
 import io.github.erichika.domain.entity.Pedido;
 import io.github.erichika.domain.entity.Produto;
+import io.github.erichika.domain.entity.enums.StatusPedido;
 import io.github.erichika.domain.repository.Clientes;
 import io.github.erichika.domain.repository.ItensPedido;
 import io.github.erichika.domain.repository.Pedidos;
@@ -41,6 +42,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         List<ItemPedido> itensPedido = converterItens(pedido, dto.getItens());
         repository.save(pedido);
