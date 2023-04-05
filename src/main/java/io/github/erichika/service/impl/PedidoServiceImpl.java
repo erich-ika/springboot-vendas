@@ -9,6 +9,7 @@ import io.github.erichika.domain.repository.Clientes;
 import io.github.erichika.domain.repository.ItensPedido;
 import io.github.erichika.domain.repository.Pedidos;
 import io.github.erichika.domain.repository.Produtos;
+import io.github.erichika.exception.PedidoNaoEncontradoException;
 import io.github.erichika.exception.RegraNegocioException;
 import io.github.erichika.rest.dto.ItemPedidoDTO;
 import io.github.erichika.rest.dto.PedidoDTO;
@@ -55,6 +56,18 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return repository.findByIdFetchItens(id);
+    }
+
+    @Override
+    @Transactional
+    public void atualizaStatus(Integer id, StatusPedido statusPedido) {
+        repository
+                .findById(id)
+                .map(pedido -> {
+                    pedido.setStatus(statusPedido);
+                    return repository.save(pedido);
+                })
+                .orElseThrow(PedidoNaoEncontradoException::new);
     }
 
     private List<ItemPedido> converterItens(Pedido pedido, List<ItemPedidoDTO> itens) {

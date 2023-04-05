@@ -2,6 +2,8 @@ package io.github.erichika.rest.controller;
 
 import io.github.erichika.domain.entity.ItemPedido;
 import io.github.erichika.domain.entity.Pedido;
+import io.github.erichika.domain.entity.enums.StatusPedido;
+import io.github.erichika.rest.dto.AtualizacaoStatusPedidoDTO;
 import io.github.erichika.rest.dto.InformacoesItemPedidoDTO;
 import io.github.erichika.rest.dto.InformacoesPedidoDTO;
 import io.github.erichika.rest.dto.PedidoDTO;
@@ -42,6 +44,14 @@ public class PedidoController {
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Pedido não encontrado."));
     }
 
+    @PatchMapping("/{id}")
+    @ResponseStatus(NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id, @RequestBody AtualizacaoStatusPedidoDTO dto) {
+        service.atualizaStatus(id, StatusPedido.valueOf(dto.getNovoStatus()));
+
+    }
+
+
     private InformacoesPedidoDTO converter(Pedido pedido) {
         return InformacoesPedidoDTO.builder()
                 .codigo(pedido.getId())
@@ -55,7 +65,7 @@ public class PedidoController {
     }
 
     private List<InformacoesItemPedidoDTO> converter(List<ItemPedido> itens) {
-        if(CollectionUtils.isEmpty(itens)) return Collections.emptyList();
+        if (CollectionUtils.isEmpty(itens)) return Collections.emptyList();
 
         return itens.stream().map(
                 item -> InformacoesItemPedidoDTO
