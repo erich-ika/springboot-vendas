@@ -1,10 +1,12 @@
 package io.github.erichika.rest;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class ApiErrors {
 
     @Getter
