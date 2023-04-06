@@ -1,5 +1,6 @@
 package io.github.erichika.rest.dto;
 
+import io.github.erichika.validation.NotEmpyList;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,6 @@ public class PedidoDTO {
     private Integer cliente;
     @NotNull(message = "Total do pedido é obrigatório.")
     private BigDecimal total;
+    @NotEmpyList(message = "Itens do pedido são obrigatórios.")
     private List<ItemPedidoDTO> itens;
 }
