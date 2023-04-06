@@ -16,26 +16,20 @@ import java.util.List;
 @Entity
 @Table(name = "pedido")
 public class Pedido {
-
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
-
     @Column(precision = 20, scale = 2)
     private BigDecimal total;
-
     @Enumerated(EnumType.STRING)
     @Column
     private StatusPedido status;
-
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens;
 }
