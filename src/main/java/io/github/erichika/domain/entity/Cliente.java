@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Set;
 
@@ -23,6 +24,8 @@ public class Cliente {
     @NotEmpty(message = "Nome é obrigatório.")
     private String nome;
     @Column(length = 11)
+    @NotEmpty(message = "CPF é obrigatório.")
+    @CPF(message = "Informe um CPF válido")
     private String cpf;
     @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
