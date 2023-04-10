@@ -1,11 +1,11 @@
 package io.github.erichika.rest.dto;
 
 import io.github.erichika.validation.NotEmpyList;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 

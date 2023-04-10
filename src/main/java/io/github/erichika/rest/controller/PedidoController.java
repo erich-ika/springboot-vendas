@@ -8,11 +8,11 @@ import io.github.erichika.rest.dto.InformacoesItemPedidoDTO;
 import io.github.erichika.rest.dto.InformacoesPedidoDTO;
 import io.github.erichika.rest.dto.PedidoDTO;
 import io.github.erichika.service.PedidoService;
-import jakarta.validation.Valid;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
