@@ -1,5 +1,7 @@
 package io.github.erichika.service.impl;
 
+import io.github.erichika.domain.entity.Usuario;
+import io.github.erichika.domain.repository.Usuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,17 +16,28 @@ public class UsuarioServiceImpl implements UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
+    @Autowired
+    private Usuarios repository;
+
+    public Usuario salvar(Usuario usuario) {
+        return repository.save(usuario);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (!username.equals("Erich")) {
-            throw new UsernameNotFoundException("Usuário não encontrado na base.");
-        }
+        Usuario usuario = repository
+                .findByLogin(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado na base de dados."));
+
+        String[] roles = usuario.isAdmin()
+                ? new String[]{"ADMIN", "USER"}
+                : new String[]{"USER"};
 
         return User
                 .builder()
-                .username("Erich")
-                .password(encoder.encode("123"))
-                .roles("USER", "ADMIN")
+                .username(usuario.getLogin())
+                .password(usuario.getSenha())
+                .roles(roles)
                 .build();
     }
 }
