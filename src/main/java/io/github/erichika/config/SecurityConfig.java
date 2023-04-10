@@ -3,6 +3,7 @@ package io.github.erichika.config;
 import io.github.erichika.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     auth.antMatchers("/api/clientes/**").hasAnyRole("USER", "ADMIN");
                     auth.antMatchers("/api/pedidos/**").hasAnyRole("USER", "ADMIN");
                     auth.antMatchers("/api/produtos/**").hasRole("ADMIN");
+                    auth.antMatchers(HttpMethod.POST, "/api/usuarios/**").permitAll();
+                    auth.anyRequest().authenticated();
                 })
                 .httpBasic();
     }
