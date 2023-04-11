@@ -1,14 +1,11 @@
 package io.github.erichika.security.jwt;
 
-import io.github.erichika.VendasApplication;
 import io.github.erichika.domain.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -61,7 +58,7 @@ public class JwtService {
             Date dateExpiracao = claims.getExpiration();
             LocalDateTime date = dateExpiracao.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-            return LocalDateTime.now().isAfter(date);
+            return !LocalDateTime.now().isAfter(date);
         } catch (Exception e) {
             return false;
         }
@@ -69,18 +66,5 @@ public class JwtService {
 
     public String obterLoginUsuario(String token) throws ExpiredJwtException {
         return obterClaims(token).getSubject();
-    }
-
-    public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(VendasApplication.class);
-        JwtService service = context.getBean(JwtService.class);
-        Usuario usuario = Usuario.builder().login("fulano").build();
-        String token = service.gerarToken(usuario);
-        System.out.println(token);
-
-        boolean isTokenValido = service.tokenValido(token);
-        System.out.println("O token está válido? " + isTokenValido);
-
-        System.out.println(service.obterLoginUsuario(token));
     }
 }

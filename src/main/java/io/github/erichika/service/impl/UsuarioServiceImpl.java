@@ -2,6 +2,7 @@ package io.github.erichika.service.impl;
 
 import io.github.erichika.domain.entity.Usuario;
 import io.github.erichika.domain.repository.Usuarios;
+import io.github.erichika.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,13 @@ public class UsuarioServiceImpl implements UserDetailsService {
 
     public Usuario salvar(Usuario usuario) {
         return repository.save(usuario);
+    }
+
+    public UserDetails auth(Usuario usuario) {
+        UserDetails usuarioLoaded = loadUserByUsername(usuario.getLogin());
+        boolean senhasBatem = encoder.matches(usuario.getSenha(), usuarioLoaded.getPassword());
+        if (senhasBatem) return usuarioLoaded;
+        else throw new SenhaInvalidaException();
     }
 
     @Override
