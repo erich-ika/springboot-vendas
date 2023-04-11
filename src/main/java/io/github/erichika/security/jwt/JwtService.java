@@ -1,5 +1,6 @@
-package io.github.erichika;
+package io.github.erichika.security.jwt;
 
+import io.github.erichika.VendasApplication;
 import io.github.erichika.domain.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
