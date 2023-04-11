@@ -40,3 +40,8 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Unversioned ####
+/.idea/dataSources/*
+/.idea/dataSources.xml
+/.idea/sqldialects.xml
