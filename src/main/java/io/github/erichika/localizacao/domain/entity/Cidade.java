@@ -10,16 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "tb_cidade")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cidade {
     @Id
-    @Column
+    @Column(name = "id_cidade")
     private Long id;
-    @Column(length = 50)
+    @Column(name = "nome", length = 50)
     private String nome;
-    @Column
+    @Column(name = "qtd_habitantes")
     private Long habitantes;
 }
