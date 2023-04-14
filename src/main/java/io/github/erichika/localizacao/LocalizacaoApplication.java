@@ -15,6 +15,7 @@ public class LocalizacaoApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
         listarCidadesPorNome();
+        listarCidadesPorQuantidadeHabitantes();
     }
 
     void listarCidadesPorNome() {
@@ -35,8 +36,14 @@ public class LocalizacaoApplication implements CommandLineRunner {
         System.out.println("-------------------------------------------------");
     }
 
-    void listarCidades() {
-        cidadeRepository.findAll().forEach(System.out::println);
+    void listarCidadesPorQuantidadeHabitantes() {;
+        System.out.println("-------------------------------------------------");
+        cidadeRepository.findByHabitantesLessThan(1000000L).forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        cidadeRepository.findByHabitantesGreaterThan(100000000L).forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        cidadeRepository.findByHabitantesLessThanAndNomeLike(1000000L, "P%").forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
     }
 
     public static void main(String[] args) {
