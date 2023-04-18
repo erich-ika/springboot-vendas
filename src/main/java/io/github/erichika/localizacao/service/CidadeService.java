@@ -1,10 +1,9 @@
 package io.github.erichika.localizacao.service;
 
+import io.github.erichika.localizacao.domain.entity.Cidade;
 import io.github.erichika.localizacao.domain.repository.CidadeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -49,6 +48,13 @@ public class CidadeService {
         System.out.println("-PAGINADO----------------------------------------");
         repository.findByNomeLike("%a%", pageable).forEach(System.out::println);
         System.out.println("-------------------------------------------------");
+    }
 
+    public void filtroDinamco(Cidade cidade) {
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnoreCase("nome0")
+                .withStringMatcher(ExampleMatcher.StringMatcher.STARTING);
+        Example<Cidade> example = Example.of(cidade, matcher);
+        repository.findAll(example).forEach(System.out::println);
     }
 }
