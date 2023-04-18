@@ -1,0 +1,54 @@
+package io.github.erichika.localizacao.service;
+
+import io.github.erichika.localizacao.domain.repository.CidadeRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class CidadeService {
+    private final CidadeRepository repository;
+
+
+    public void listarCidadesPorNome() {
+        System.out.println("-------------------------------------------------");
+        repository.findByNome("Porto Velho").forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        repository.findByHabitantes(306296L).forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        repository.findByNomeStartingWith("Porto").forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        repository.findByNomeEndingWith("a").forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        repository.findByNomeContaining("a").forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        repository.findByNomeLike("%a%").forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        repository.findByNomeLikeIgnoreCase("SÃO%").forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+    }
+
+    public void listarCidadesPorQuantidadeHabitantes() {
+        System.out.println("-------------------------------------------------");
+        repository.findByHabitantesLessThan(1000000L).forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        repository.findByHabitantesGreaterThan(100000000L).forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+        repository.findByHabitantesLessThanAndNomeLike(1000000L, "P%").forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+    }
+
+    public void listarCidadesPorNomeOrdenado() {
+        Pageable pageable = PageRequest.of(1, 3);
+
+        System.out.println("-ORDENADO----------------------------------------");
+        repository.findByNomeLike("%a%", Sort.by("habitantes")).forEach(System.out::println);
+        System.out.println("-PAGINADO----------------------------------------");
+        repository.findByNomeLike("%a%", pageable).forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
+
+    }
+}
