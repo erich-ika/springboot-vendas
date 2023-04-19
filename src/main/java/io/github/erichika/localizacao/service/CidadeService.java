@@ -4,10 +4,11 @@ import io.github.erichika.localizacao.domain.entity.Cidade;
 import io.github.erichika.localizacao.domain.repository.CidadeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import static io.github.erichika.localizacao.domain.repository.specs.CidadeSpecs.habitantesGreaterThan;
-import static io.github.erichika.localizacao.domain.repository.specs.CidadeSpecs.nomeEqual;
+import static io.github.erichika.localizacao.domain.repository.specs.CidadeSpecs.*;
 
 @Service
 @RequiredArgsConstructor
@@ -66,6 +67,24 @@ public class CidadeService {
         Specification<Cidade> spec = CidadeSpecs.nomeEqual("São Paulo").and(CidadeSpecs.habitantesGreaterThan(1000));
         repository.findAll(spec).forEach(System.out::println);
         */
-        repository.findAll(nomeEqual("São Paulo").and(habitantesGreaterThan(1000000))).forEach(System.out::println);
+        repository.findAll(nomeEqual("São Paulo").and(habitantesGreaterThan(1000000L))).forEach(System.out::println);
+    }
+
+    public void listarCidadesSpecsFiltroDinamico(Cidade filtro) {
+        Specification<Cidade> specs = Specification.where((root, query, cb) -> cb.conjunction());
+
+        if (filtro.getId() != null) {
+            specs = specs.and(idEqual(filtro.getId()));
+        }
+
+        if (StringUtils.hasText(filtro.getNome())) {
+            specs = specs.and(nomeLikeIgnoreCase(filtro.getNome()));
+        }
+
+        if (filtro.getHabitantes() != null) {
+            specs = specs.and(habitantesGreaterThan(filtro.getHabitantes()));
+        }
+
+        repository.findAll(specs).forEach(System.out::println);
     }
 }
