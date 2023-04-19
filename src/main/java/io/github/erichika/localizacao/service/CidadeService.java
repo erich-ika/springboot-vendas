@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import static io.github.erichika.localizacao.domain.repository.specs.CidadeSpecs.habitantesGreaterThan;
+import static io.github.erichika.localizacao.domain.repository.specs.CidadeSpecs.nomeEqual;
+
 @Service
 @RequiredArgsConstructor
 public class CidadeService {
@@ -56,5 +59,13 @@ public class CidadeService {
                 .withStringMatcher(ExampleMatcher.StringMatcher.STARTING);
         Example<Cidade> example = Example.of(cidade, matcher);
         repository.findAll(example).forEach(System.out::println);
+    }
+
+    public void listarCidadesByNomeSpec() {
+        /*
+        Specification<Cidade> spec = CidadeSpecs.nomeEqual("São Paulo").and(CidadeSpecs.habitantesGreaterThan(1000));
+        repository.findAll(spec).forEach(System.out::println);
+        */
+        repository.findAll(nomeEqual("São Paulo").and(habitantesGreaterThan(1000000))).forEach(System.out::println);
     }
 }
