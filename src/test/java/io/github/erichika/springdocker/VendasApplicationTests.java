@@ -1,13 +1,13 @@
-package io.github.erichika.localizacao;
+package io.github.erichika.springdocker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LocalizacaoApplicationTests {
+class VendasApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
