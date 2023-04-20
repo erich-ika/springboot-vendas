@@ -1,6 +1,7 @@
 package io.github.erichika.localizacao.domain.repository;
 
 import io.github.erichika.localizacao.domain.entity.Cidade;
+import io.github.erichika.localizacao.domain.repository.projections.CidadeProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -11,6 +12,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CidadeRepository extends JpaRepository<Cidade, Long>, JpaSpecificationExecutor {
+    @Query(nativeQuery = true, value = "select c.id_cidade, c.nome from `tb_cidade` c where c.nome = :nome")
+    List<CidadeProjection> findByNomeSqlNativo(String nome);
     List<Cidade> findByNome(String nome);
     List<Cidade> findByNomeLike(String nome);
     List<Cidade> findByNomeLike(String nome, Sort sort);

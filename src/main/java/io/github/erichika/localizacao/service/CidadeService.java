@@ -15,7 +15,6 @@ import static io.github.erichika.localizacao.domain.repository.specs.CidadeSpecs
 public class CidadeService {
     private final CidadeRepository repository;
 
-
     public void listarCidadesPorNome() {
         System.out.println("-------------------------------------------------");
         repository.findByNome("Porto Velho").forEach(System.out::println);
@@ -86,5 +85,19 @@ public class CidadeService {
         }
 
         repository.findAll(specs).forEach(System.out::println);
+    }
+
+    public void listarCidadesPorNomeSql() {
+        System.out.println("-------------------------------------------------");
+        repository.findByNomeSqlNativo("São Paulo").stream()
+                .map(
+                        cidadeProjection -> new Cidade(
+                                cidadeProjection.getId(),
+                                cidadeProjection.getNome(),
+                                null
+                        )
+                )
+                .forEach(System.out::println);
+        System.out.println("-------------------------------------------------");
     }
 }

@@ -8,6 +8,7 @@ public abstract class CidadeSpecs {
     public static Specification<Cidade> idEqual(Long id) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("id"), id);
     }
+
     public static Specification<Cidade> nomeEqual(String nome) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("nome"), nome);
     }
